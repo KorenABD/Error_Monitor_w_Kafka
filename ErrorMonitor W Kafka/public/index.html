@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error Monitor Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>🚨 Error Monitor Dashboard</h1>
+      <div class="stats">
+        <div class="stat-card">
+          <h3>Total Errors</h3>
+          <span id="total-errors">0</span>
+        </div>
+        <div class="stat-card">
+          <h3>Unresolved</h3>
+          <span id="unresolved-errors">0</span>
+        </div>
+        <div class="stat-card">
+          <h3>Last Hour</h3>
+          <span id="recent-errors">0</span>
+        </div>
+        <div class="stat-card">
+          <h3>Status</h3>
+          <span id="system-status">Healthy</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="controls">
+        <button id="simulate-error" class="btn btn-danger">Simulate Error</button>
+        <button id="clear-errors" class="btn btn-secondary">Clear All</button>
+        <button id="refresh" class="btn btn-primary">Refresh</button>
+        <label>
+          <input type="checkbox" id="show-resolved"> Show Resolved
+        </label>
+      </section>
+
+      <!-- Categories Section -->
+      <section class="categories-section">
+        <h3>📋 Error Categories</h3>
+        <div class="categories-container">
+          <div class="category-filters">
+            <button id="filter-all" class="category-filter active" data-category="all">
+              All Categories
+            </button>
+            <div id="category-buttons"></div>
+          </div>
+          <div class="categories-stats" id="categories-stats">
+            <!-- Category stats will be populated here -->
+          </div>
+        </div>
+      </section>
+
+      <section class="error-list">
+        <h2>Recent Errors</h2>
+        <div id="current-filter" class="current-filter">Showing: All Categories</div>
+        <div id="errors-container">
+          <p class="no-errors">No errors reported yet. Click "Simulate Error" to test!</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Resolve Modal -->
+  <div id="resolve-modal" class="modal-overlay hidden">
+    <div class="modal">
+      <h3>Resolve Error</h3>
+      <p id="resolve-error-message"></p>
+      <textarea id="resolve-comment" placeholder="Add a comment about how this error was resolved..."></textarea>
+      <div class="modal-actions">
+        <button id="cancel-resolve" class="btn btn-secondary">Cancel</button>
+        <button id="confirm-resolve" class="btn btn-success">Resolve Error</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+{
+  "errorTypes": [
+    {
+      "message": "Database connection timeout",
+      "severity": "high",
+      "category": "database",
+      "description": "Database server is not responding within expected timeframe"
+    },
+    {
+      "message": "API rate limit exceeded",
+      "severity": "medium",
+      "category": "api",
+      "description": "Too many requests sent in a short period"
+    },
+    {
+      "message": "Invalid user authentication",
+      "severity": "high",
+      "category": "security",
+      "description": "User credentials could not be verified"
+    },
+    {
+      "message": "File not found: config.json",
+      "severity": "high",
+      "category": "filesystem",
+      "description": "Required configuration file is missing"
+    },
+    {
+      "message": "Memory leak detected in module X",
+      "severity": "critical",
+      "category": "performance",
+      "description": "Application memory usage is continuously increasing"
+    },
+    {
+      "message": "Network request failed: timeout",
+      "severity": "medium",
+      "category": "network",
+      "description": "External service did not respond within timeout period"
+    },
+    {
+      "message": "SSL certificate expired",
+      "severity": "critical",
+      "category": "security",
+      "description": "Security certificate needs renewal"
+    },
+    {
+      "message": "Disk space running low",
+      "severity": "high",
+      "category": "system",
+      "description": "Available storage space is below threshold"
+    },
+    {
+      "message": "Service unavailable: payment gateway",
+      "severity": "critical",
+      "category": "external",
+      "description": "Third-party payment service is not accessible"
+    },
+    {
+      "message": "Redis connection lost",
+      "severity": "high",
+      "category": "cache",
+      "description": "Cache server connection has been interrupted"
+    },
+    {
+      "message": "Load balancer health check failed",
+      "severity": "critical",
+      "category": "infrastructure",
+      "description": "Application failed load balancer health verification"
+    },
+    {
+      "message": "Backup process failed",
+      "severity": "medium",
+      "category": "backup",
+      "description": "Scheduled backup operation did not complete successfully"
+    }
+  ]
+}

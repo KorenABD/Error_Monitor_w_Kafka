@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error Monitor - Login</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      overflow: hidden;
+    }
+
+    .auth-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .auth-header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .auth-header p {
+      opacity: 0.9;
+      font-size: 0.9rem;
+    }
+
+    .auth-body {
+      padding: 30px;
+    }
+
+    .auth-tabs {
+      display: flex;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      background: #f8f9fa;
+      padding: 4px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 12px;
+      cursor: pointer;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: all 0.2s;
+      color: #6c757d;
+    }
+
+    .auth-tab.active {
+      background: #667eea;
+      color: white;
+    }
+
+    .auth-form {
+      display: none;
+    }
+
+    .auth-form.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 15px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #2d3748;
+      font-size: 0.9rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      background: #f8f9fa;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #667eea;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-input.error {
+      border-color: #e53e3e;
+      background: #fffafa;
+    }
+
+    .form-error {
+      color: #e53e3e;
+      font-size: 0.8rem;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .form-error.show {
+      display: block;
+    }
+
+    .password-strength {
+      margin-top: 8px;
+      display: none;
+    }
+
+    .password-strength.show {
+      display: block;
+    }
+
+    .strength-bar {
+      height: 4px;
+      background: #e2e8f0;
+      border-radius: 2px;
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+
+    .strength-fill {
+      height: 100%;
+      width: 0%;
+      transition: all 0.3s;
+      border-radius: 2px;
+    }
+
+    .strength-weak {
+      background: #e53e3e;
+      width: 25%;
+    }
+
+    .strength-fair {
+      background: #fd7f28;
+      width: 50%;
+    }
+
+    .strength-good {
+      background: #f6ad55;
+      width: 75%;
+    }
+
+    .strength-strong {
+      background: #38a169;
+      width: 100%;
+    }
+
+    .strength-text {
+      font-size: 0.8rem;
+      color: #6c757d;
+    }
+
+    .auth-button {
+      width: 100%;
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 20px;
+    }
+
+    .auth-button:hover:not(:disabled) {
+      background: #5a67d8;
+      transform: translateY(-1px);
+    }
+
+    .auth-button:disabled {
+      background: #a0aec0;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .auth-divider {
+      text-align: center;
+      margin: 20px 0;
+      color: #6c757d;
+      position: relative;
+    }
+
+    .auth-divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .auth-divider span {
+      background: white;
+      padding: 0 15px;
+    }
+
+    .demo-login {
+      background: #f8f9fa;
+      border: 2px solid #e2e8f0;
+      color: #4a5568;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .demo-login button {
+      background: none;
+      border: none;
+      color: #667eea;
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .alert {
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .alert-error {
+      background: #fed7d7;
+      color: #c53030;
+      border: 1px solid #feb2b2;
+    }
+
+    .alert-success {
+      background: #c6f6d5;
+      color: #276749;
+      border: 1px solid #9ae6b4;
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid transparent;
+      border-top: 2px solid currentColor;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .auth-container {
+        margin: 10px;
+      }
+
+      .auth-body {
+        padding: 20px;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="auth-container">
+    <div class="auth-header">
+      <h1>🚨 Error Monitor</h1>
+      <p>Secure authentication system</p>
+    </div>
+
+    <div class="auth-body">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Login</button>
+        <button class="auth-tab" data-tab="register">Register</button>
+      </div>
+
+      <div id="alert-container"></div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form active">
+        <div class="form-group">
+          <label class="form-label" for="login-email">Email Address</label>
+          <input type="email" id="login-email" name="email" class="form-input" placeholder="Enter your email" required>
+          <div class="form-error" id="login-email-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="login-password">Password</label>
+          <input type="password" id="login-password" name="password" class="form-input"
+            placeholder="Enter your password" required>
+          <div class="form-error" id="login-password-error"></div>
+        </div>
+
+        <button type="submit" class="auth-button" id="login-button">
+          <span class="button-text">Sign In</span>
+        </button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="register-form" class="auth-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="register-firstname">First Name</label>
+            <input type="text" id="register-firstname" name="firstName" class="form-input" placeholder="First name"
+              required>
+            <div class="form-error" id="register-firstname-error"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="register-lastname">Last Name</label>
+            <input type="text" id="register-lastname" name="lastName" class="form-input" placeholder="Last name"
+              required>
+            <div class="form-error" id="register-lastname-error"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="register-email">Email Address</label>
+          <input type="email" id="register-email" name="email" class="form-input" placeholder="Enter your email"
+            required>
+          <div class="form-error" id="register-email-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="register-password">Password</label>
+          <input type="password" id="register-password" name="password" class="form-input"
+            placeholder="Create a secure password" required>
+          <div class="password-strength" id="password-strength">
+            <div class="strength-bar">
+              <div class="strength-fill" id="strength-fill"></div>
+            </div>
+            <div class="strength-text" id="strength-text">Password strength</div>
+          </div>
+          <div class="form-error" id="register-password-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="register-confirm-password">Confirm Password</label>
+          <input type="password" id="register-confirm-password" name="confirmPassword" class="form-input"
+            placeholder="Confirm your password" required>
+          <div class="form-error" id="register-confirm-password-error"></div>
+        </div>
+
+        <button type="submit" class="auth-button" id="register-button">
+          <span class="button-text">Create Account</span>
+        </button>
+      </form>
+
+      <div class="auth-divider">
+        <span>Demo Access</span>
+      </div>
+
+      <div class="demo-login">
+        <p>Quick access for testing:</p>
+        <button type="button" id="demo-login">Use Demo Account</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/auth.js"></script>
+</body>
+
+</html>
